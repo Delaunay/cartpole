@@ -1,18 +1,25 @@
 {
 	"FileVersion": 3,
-	"EngineAssociation": "{00048DE9-08D9-2552-7545-EFA67E2DEBFE}",
+	"EngineAssociation": "{2D4A449E-4019-A940-3B48-56BCFCE8A219}",
 	"Category": "",
 	"Description": "",
 	"Modules": [
 		{
 			"Name": "UE4RL",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
 	],
 	"Plugins": [
 		{
 			"Name": "UE4ML",
+			"Enabled": true
+		},
+		{
+			"Name": "GLTFImporter",
 			"Enabled": true
 		}
 	]
