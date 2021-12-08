@@ -2,19 +2,19 @@
 # *DO NOT EDIT*
 
 UNREALROOTPATH = /media/setepenre/Games/UnrealEngine
-GAMEPROJECTFILE =/media/setepenre/Games/UE4RL/UE4RL.uproject
+GAMEPROJECTFILE =/media/setepenre/Games/CP/CP.uproject
 
 TARGETS = \
-	UE4RL-Linux-Debug  \
-	UE4RL-Linux-DebugGame  \
-	UE4RL-Linux-Shipping  \
-	UE4RL-Linux-Test  \
-	UE4RL \
-	UE4RLEditor-Linux-Debug  \
-	UE4RLEditor-Linux-DebugGame  \
-	UE4RLEditor-Linux-Shipping  \
-	UE4RLEditor-Linux-Test  \
-	UE4RLEditor \
+	CP-Linux-Debug  \
+	CP-Linux-DebugGame  \
+	CP-Linux-Shipping  \
+	CP-Linux-Test  \
+	CP \
+	CPEditor-Linux-Debug  \
+	CPEditor-Linux-DebugGame  \
+	CPEditor-Linux-Shipping  \
+	CPEditor-Linux-Test  \
+	CPEditor \
 	BenchmarkTool-Linux-Debug  \
 	BenchmarkTool-Linux-DebugGame  \
 	BenchmarkTool-Linux-Shipping  \
@@ -329,35 +329,35 @@ StandardSet: RequiredTools UnrealFrontend UE4Editor UnrealInsights
 DebugSet: RequiredTools UnrealFrontend-Linux-Debug UE4Editor-Linux-Debug
 
 
-UE4RL-Linux-Debug:
-	 $(PROJECTBUILD) UE4RL Linux Debug  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CP-Linux-Debug:
+	 $(PROJECTBUILD) CP Linux Debug  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-UE4RL-Linux-DebugGame:
-	 $(PROJECTBUILD) UE4RL Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CP-Linux-DebugGame:
+	 $(PROJECTBUILD) CP Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-UE4RL-Linux-Shipping:
-	 $(PROJECTBUILD) UE4RL Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CP-Linux-Shipping:
+	 $(PROJECTBUILD) CP Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-UE4RL-Linux-Test:
-	 $(PROJECTBUILD) UE4RL Linux Test  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CP-Linux-Test:
+	 $(PROJECTBUILD) CP Linux Test  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-UE4RL:
-	 $(PROJECTBUILD) UE4RL Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CP:
+	 $(PROJECTBUILD) CP Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-UE4RLEditor-Linux-Debug:
-	 $(PROJECTBUILD) UE4RLEditor Linux Debug  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CPEditor-Linux-Debug:
+	 $(PROJECTBUILD) CPEditor Linux Debug  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-UE4RLEditor-Linux-DebugGame:
-	 $(PROJECTBUILD) UE4RLEditor Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CPEditor-Linux-DebugGame:
+	 $(PROJECTBUILD) CPEditor Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-UE4RLEditor-Linux-Shipping:
-	 $(PROJECTBUILD) UE4RLEditor Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CPEditor-Linux-Shipping:
+	 $(PROJECTBUILD) CPEditor Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-UE4RLEditor-Linux-Test:
-	 $(PROJECTBUILD) UE4RLEditor Linux Test  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CPEditor-Linux-Test:
+	 $(PROJECTBUILD) CPEditor Linux Test  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-UE4RLEditor:
-	 $(PROJECTBUILD) UE4RLEditor Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CPEditor:
+	 $(PROJECTBUILD) CPEditor Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
 BenchmarkTool-Linux-Debug:
 	 $(BUILD) BenchmarkTool Linux Debug  -project="$(GAMEPROJECTFILE)" $(ARGS)
@@ -1261,6 +1261,6 @@ UE4Server:
 
 configure:
 	xbuild /property:Configuration=Development /verbosity:quiet /nologo "$(UNREALROOTPATH)/Engine/Source/Programs/UnrealBuildTool/UnrealBuildTool.csproj"
-	$(PROJECTBUILD) -projectfiles -project="\"$(GAMEPROJECTFILE)\"" -game -engine 
+	$(PROJECTBUILD) -projectfiles -project="\"$(GAMEPROJECTFILE)\"" -game -engine
 
 .PHONY: $(TARGETS)
