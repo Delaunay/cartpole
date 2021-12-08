@@ -1,4 +1,4 @@
-Make the Cartpole Game
+Make the cartpole game
 ~~~~~~~~~~~~~~~~~~~~~~
 
 You will need to specialize 3 classes in C++.

@@ -2,7 +2,7 @@
 Python Doc
 ==========
 
-.. automodule:: cartpole.env
+.. autoclass:: cartpole.env.Cartpole
     :members:
     :undoc-members:
     :show-inheritance:

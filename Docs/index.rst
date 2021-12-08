@@ -16,6 +16,18 @@ to focus on how to setup a project for machine learning, then we will train a ne
 
 The notions seen in this project are applicable to any games made using UnrealEngine.
 
+
+Why UnrealEngine
+~~~~~~~~~~~~~~~~
+
+* UnrealEngine is essentially open-source. The source is proprietary and technically private but you can get access by simply creating an Epic Account.
+* The licencing is perfect for academia (See Creators LICENSE)
+* All UnrealEngine technologies available to develop new cutting edge environments
+* Easy to port research into the real world
+* Easy to develop and redistribute environments
+* Completely free
+
+
 About UE4ML
 ~~~~~~~~~~~
 

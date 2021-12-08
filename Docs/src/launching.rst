@@ -1,5 +1,5 @@
-Cartpole as a gym env
-=====================
+Cartpole as a gym environment
+=============================
 
 Python
 ~~~~~~
@@ -240,7 +240,7 @@ to your cartpole uproject.
 
 .. raw:: html
 
-   <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/dV_mkHu1wQ4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+   <iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/dV_mkHu1wQ4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 .. note::

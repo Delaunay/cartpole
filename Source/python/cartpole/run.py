@@ -4,6 +4,7 @@ import os
 from cartpole.env import Cartpole
 from ue4ml.utils import random_action, ArgumentParser
 from ue4ml.runner import UE4Params
+import ue4ml.logger as logger
 
 project = '/media/setepenre/Games/UE4RL/UE4RL.uproject'
 project = 'E:/cartpole/UE4RL.uproject'
@@ -27,6 +28,7 @@ args = parser.parse_args()
 if os.environ.get('UE-DevBinaries') is None and args.exec is None:
     raise RuntimeError('UE4 binaries not found')
 
+logger.set_level(logger.DEBUG)
 
 env = Cartpole(
     args.project,
