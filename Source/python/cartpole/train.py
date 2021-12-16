@@ -7,12 +7,14 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import gym.spaces
-import ue4ml.logger as logger
+
 from torch.distributions import Categorical
+from torchvision.utils import save_image
+import ue4ml.logger as logger
 from ue4ml.utils import random_action
 
 from cartpole.env import Cartpole
-from cartpole.model import Model
+from cartpole.model import MLP, LeNet
 from cartpole.replay import ReplayMemory, Transition
 
 
@@ -20,8 +22,6 @@ logger.set_level(logger.DEBUG)
 
 project = 'E:/cartpole/UE4RL.uproject'
 
-
-env = Cartpole(project)
 
 def space_size(x):
     def prod(lst):
@@ -52,6 +52,11 @@ def space_size(x):
         return n
 
 
+def space_shape(x):
+    if isinstance(x, gym.spaces.Box):
+        return x.shape
+
+
 def flatten_obs(obs, size):
     t = torch.zeros((size,))
 
@@ -66,6 +71,10 @@ def flatten_obs(obs, size):
     return t
 
 
+def swap_channel(x):
+    return torch.from_numpy(x).permute(2, 0, 1)[0:3, :, :]
+
+
 BATCH_SIZE = 128
 GAMMA = 0.999
 EPS_START = 0.9
@@ -73,20 +82,35 @@ EPS_END = 0.05
 EPS_DECAY = 200
 TARGET_UPDATE = 10
 
+def select(cond, a, b):
+    return a if cond else b
+
 
 class DDQTrainer:
     def __init__(self) -> None:
-        self.input_size = space_size(env.observation_space)
-        self.output_size = space_size(env.action_space)
+        self.use_image = True
+        self.input_size = select(
+            self.use_image,
+            (3, 32, 32),
+            space_size(env.observation_space),
+        )
+        self.output_size = space_size(env.action_space) #  + 1
 
         self.device = 'cuda'
-        self.policy = Model(self.input_size, self.output_size).to(self.device)
-        self.target = Model(self.input_size, self.output_size).to(self.device)
+        model = select(self.use_image, LeNet, MLP)
+        self.policy = model(self.input_size, self.output_size).to(self.device)
+        self.target = model(self.input_size, self.output_size).to(self.device)
 
         self.target.load_state_dict(self.policy.state_dict())
         self.target.eval()
 
-        self.optimizer = optim.RMSprop(self.policy.parameters())
+        self.optimizer = optim.RMSprop(self.policy.parameters(),
+            lr=1e-3,
+            alpha=0.99,
+            eps=1e-8,
+            weight_decay=0.01,
+            momentum=0.9
+        )
         self.memory = ReplayMemory(10000)
         self.loss = 0
         self.loss_count = 0
@@ -94,19 +118,19 @@ class DDQTrainer:
     def select_action(self, state):
         """Our model does not return the action perse but the distribution of all the action"""
 
-
         with torch.no_grad():
             # Our batch is size=1 here
             state = state.unsqueeze(0).to(self.device)
 
             weights = self.policy(state)
+
             dist = Categorical(weights)
             action = dist.sample()
 
-            print('Action: ', action.item(), random_action(env))
+            # print('Action: ', action.item(), random_action(env))
 
             log_prob = dist.log_prob(action).unsqueeze(1)
-            return action, log_prob, dist.entropy()
+            return action, log_prob, dist.entropy(), weights
 
     def optimize(self):
         if len(self.memory) < BATCH_SIZE:
@@ -161,19 +185,33 @@ class DDQTrainer:
         self.loss += loss.item()
         self.loss_count += 1;
 
-    def train(self):
-        num_episodes = 50
+    def preprocess_obs(self, obs):
+        if self.use_image:
+            return swap_channel(obs)
 
-        for i_episode in range(num_episodes):
+        return flatten_obs(obs, self.input_size)
+
+    def train(self, episodes):
+
+        for i_episode in range(episodes):
             # Initialize the environment and state
-            state = flatten_obs(env.reset(), self.input_size)
+            state = self.preprocess_obs(env.reset())
 
             for t in count():
                 # Select and perform an action
-                action, log_prob, entropy = self.select_action(state)
+                action, log_prob, entropy, weights = self.select_action(state)
 
-                obs, reward, done, _ = env.step(action.item())
-                obs = flatten_obs(obs, self.input_size)
+                rpc_action = action.item()
+
+                # values = ' '.join([f'{i: 8.2f}' for i in state.numpy()])
+                msg = f'\r {t:4d} {rpc_action} {weights}'
+                msg = f'{msg}{" " * (80 - len(msg))}'
+
+                print(msg, end='')
+                obs, reward, done, _ = env.step(rpc_action)
+                reward = reward * t / 200
+
+                obs = self.preprocess_obs(obs)
 
                 reward = torch.tensor([reward], device=self.device)
 
@@ -183,14 +221,16 @@ class DDQTrainer:
                 # Move to the next state
                 state = obs
 
+                # save_image(state, 'image.png')
+
                 # Perform one step of the optimization (on the policy network)
                 self.optimize()
 
                 if done:
                     break
 
-            if (self.loss_count > 100):
-                print(f'{i_episode} {t} Loss {self.loss / self.loss_count}')
+            if (self.loss_count > 50):
+                print(f'\n{i_episode} {t} Loss {self.loss / self.loss_count}')
                 self.loss_count = 0
                 self.loss = 0
 
@@ -200,5 +240,31 @@ class DDQTrainer:
 
 
 if __name__ == '__main__':
+    #
+    # python Source/python/cartpole/train.py --project E:/cartpole/Cartpole.uproject --exec E:/UnrealEngine/Engine/Binaries/Win64/UE4Editor.exe
+    #
+    from ue4ml.runner import UE4Params
+    from ue4ml.utils import ArgumentParser
+
+    parser = ArgumentParser()
+    parser.add_argument("--project", type=str, default=project,
+                        help="Path to the uproject")
+
+    parser.add_argument("--launch", action='store_true', default=False,
+                        help="If true the game will be launched by python")
+    args = parser.parse_args()
+
+    env = Cartpole(
+        args.project,
+        ue4params=UE4Params(rendering=True, single_thread=True) if args.launch else None,
+        server_port=15151
+    )
+
     trainer = DDQTrainer()
-    trainer.train()
+
+    # print(env.action_space)
+    # print(list(map(float, gym.spaces.flatten(env.action_space, 0))))
+    # print(list(map(float, gym.spaces.flatten(env.action_space, 1))))
+    # print(gym.spaces.Discrete(2).sample())
+
+    trainer.train(500)
