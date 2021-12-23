@@ -20,6 +20,12 @@ Python
    The required tornado version is particularly old ``tornado >= 3,<5``
    This might break your environment. You should build a virtualenv just for UE4.
 
+.. warning::
+
+   To try UE4ML on linux you will need to build UE4 from source using
+   my `custom branch <https://github.com/Delaunay/UnrealEngine/tree/Enable_U4ML_Linux>`_ (& build rpclib yourself)
+
+
 
 - Install python using `conda <https://docs.conda.io/en/latest/miniconda.html>`_
 - Install `pytorch <https://pytorch.org/get-started/locally/>`_
