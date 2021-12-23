@@ -1,9 +1,15 @@
 from ue4ml import UnrealEnv
 from ue4ml.core import AgentConfig
 
+import pkg_resources
+
+cartpole_linux = pkg_resources.resource_filename(
+    __name__, "Cooked/LinuxNoEditor/Cartpole/Binaries/Linux/Cartpole"
+)
+
 
 class Cartpole(UnrealEnv):
-    MAP = '/Game/CartPole/CartPole.umap'
+    MAP = "/Game/CartPole/CartPole.umap"
     PROJECT_NAME = None
     USE_IMAGE = True
 
@@ -32,29 +38,25 @@ class Cartpole(UnrealEnv):
                 {
                     "width": "32",
                     "height": "32",
-                }
+                },
             )
             return agent_config
 
         # Add our pawn movement (i.e cart movement)
         agent_config.add_sensor(
-            "Movement",
-            {
-                "location": "absolute",
-                "velocity": "absolute"
-            }
+            "Movement", {"location": "absolute", "velocity": "absolute"}
         )
 
         # Add sight so we can see the pole
         agent_config.add_sensor(
             "AIPerception",
             {
-                "count": "2",                   # Number of actors it can see
-                'sort': 'distance',             # how the actors are sorted `distance`` or `in_front`
-                'peripheral_angle': 180,        # sight cone
-                'mode': 'rotator',               # vector (HeadingVector) or rotator
-                                                # max_age
-            }
+                "count": "2",  # Number of actors it can see
+                "sort": "distance",  # how the actors are sorted `distance`` or `in_front`
+                "peripheral_angle": 180,  # sight cone
+                "mode": "rotator",  # vector (HeadingVector) or rotator
+                # max_age
+            },
         )
 
         return agent_config

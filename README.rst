@@ -6,6 +6,18 @@ Reimplementation of the cartpole environment in UE4 as a demo of the UE4ML plugi
 .. image:: Cartpole_big.png
 
 
+Requirements
+~~~~~~~~~~~~
+
+* UE4 - 4.27/master
+
+
+.. note::
+
+   For linux you will need to compile my `custom branch <https://github.com/EpicGames/UnrealEngine/pull/8745>`_ from source.
+
+
+
 
 Install
 ~~~~~~~

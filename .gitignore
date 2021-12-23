@@ -29,6 +29,9 @@ CP.workspace
 CP.kdev4
 .kdev4/
 
+Cooked/
+Source/python/cartpole/Cooked/
+
 __pycache__/
 cartpole.egg-info/
 CMakeLists.txt
@@ -38,3 +41,5 @@ Cartpole.workspace
 CartpoleCodeCompletionFolders.txt
 CartpoleCodeLitePreProcessor.txt
 out.txt
+build/
+dist/
