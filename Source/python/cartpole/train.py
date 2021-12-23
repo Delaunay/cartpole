@@ -1,4 +1,3 @@
-
 import random
 import math
 from itertools import count
@@ -20,7 +19,7 @@ from cartpole.replay import ReplayMemory, Transition
 
 logger.set_level(logger.DEBUG)
 
-project = 'E:/cartpole/UE4RL.uproject'
+project = "E:/cartpole/UE4RL.uproject"
 
 
 def space_size(x):
@@ -65,7 +64,7 @@ def flatten_obs(obs, size):
     for ob in obs:
         v = torch.flatten(torch.Tensor(ob))
         e = v.shape[0]
-        t[s:s+e] = v
+        t[s : s + e] = v
         s = s + e
 
     return t
@@ -82,6 +81,7 @@ EPS_END = 0.05
 EPS_DECAY = 200
 TARGET_UPDATE = 10
 
+
 def select(cond, a, b):
     return a if cond else b
 
@@ -94,9 +94,9 @@ class DDQTrainer:
             (3, 32, 32),
             space_size(env.observation_space),
         )
-        self.output_size = space_size(env.action_space) #  + 1
+        self.output_size = space_size(env.action_space)  #  + 1
 
-        self.device = 'cuda'
+        self.device = "cuda"
         model = select(self.use_image, LeNet, MLP)
         self.policy = model(self.input_size, self.output_size).to(self.device)
         self.target = model(self.input_size, self.output_size).to(self.device)
@@ -104,12 +104,13 @@ class DDQTrainer:
         self.target.load_state_dict(self.policy.state_dict())
         self.target.eval()
 
-        self.optimizer = optim.RMSprop(self.policy.parameters(),
+        self.optimizer = optim.RMSprop(
+            self.policy.parameters(),
             lr=1e-3,
             alpha=0.99,
             eps=1e-8,
             weight_decay=0.01,
-            momentum=0.9
+            momentum=0.9,
         )
         self.memory = ReplayMemory(10000)
         self.loss = 0
@@ -143,11 +144,12 @@ class DDQTrainer:
         non_final_mask = torch.tensor(
             tuple(map(lambda s: s is not None, batch.next_state)),
             device=self.device,
-            dtype=torch.bool
+            dtype=torch.bool,
         )
 
         non_final_next_states = torch.stack(
-            [s for s in batch.next_state if s is not None]).to(self.device)
+            [s for s in batch.next_state if s is not None]
+        ).to(self.device)
 
         # Shape is 128x11
         state_batch = torch.stack(batch.state).to(self.device)
@@ -170,7 +172,9 @@ class DDQTrainer:
         next_state_values[non_final_mask] = expected
 
         # Compute the expected Q values
-        expected_state_action_values = ((next_state_values * GAMMA) + reward_batch).unsqueeze(1)
+        expected_state_action_values = (
+            (next_state_values * GAMMA) + reward_batch
+        ).unsqueeze(1)
 
         criterion = nn.SmoothL1Loss()
         loss = criterion(state_action_values, expected_state_action_values)
@@ -183,7 +187,7 @@ class DDQTrainer:
         self.optimizer.step()
 
         self.loss += loss.item()
-        self.loss_count += 1;
+        self.loss_count += 1
 
     def preprocess_obs(self, obs):
         if self.use_image:
@@ -204,10 +208,10 @@ class DDQTrainer:
                 rpc_action = action.item()
 
                 # values = ' '.join([f'{i: 8.2f}' for i in state.numpy()])
-                msg = f'\r {t:4d} {rpc_action} {weights}'
+                msg = f"\r {t:4d} {rpc_action} {weights}"
                 msg = f'{msg}{" " * (80 - len(msg))}'
 
-                print(msg, end='')
+                print(msg, end="")
                 obs, reward, done, _ = env.step(rpc_action)
                 reward = reward * t / 200
 
@@ -229,8 +233,8 @@ class DDQTrainer:
                 if done:
                     break
 
-            if (self.loss_count > 50):
-                print(f'\n{i_episode} {t} Loss {self.loss / self.loss_count}')
+            if self.loss_count > 50:
+                print(f"\n{i_episode} {t} Loss {self.loss / self.loss_count}")
                 self.loss_count = 0
                 self.loss = 0
 
@@ -239,25 +243,33 @@ class DDQTrainer:
                 self.target.load_state_dict(self.policy.state_dict())
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     #
     # python Source/python/cartpole/train.py --project E:/cartpole/Cartpole.uproject --exec E:/UnrealEngine/Engine/Binaries/Win64/UE4Editor.exe
-    #
+    # python Source/python/cartpole/train.py --project /media/setepenre/Games/cartpole/Cartpole.uproject --exec /media/setepenre/Games/UnrealEngine/Engine/Binaries/Linux/UE4Editor
+
     from ue4ml.runner import UE4Params
     from ue4ml.utils import ArgumentParser
 
     parser = ArgumentParser()
-    parser.add_argument("--project", type=str, default=project,
-                        help="Path to the uproject")
+    parser.add_argument(
+        "--project", type=str, default=project, help="Path to the uproject"
+    )
 
-    parser.add_argument("--launch", action='store_true', default=False,
-                        help="If true the game will be launched by python")
+    parser.add_argument(
+        "--launch",
+        action="store_true",
+        default=False,
+        help="If true the game will be launched by python",
+    )
     args = parser.parse_args()
 
     env = Cartpole(
         args.project,
-        ue4params=UE4Params(rendering=True, single_thread=True) if args.launch else None,
-        server_port=15151
+        ue4params=UE4Params(rendering=True, single_thread=True)
+        if args.launch
+        else None,
+        server_port=15151,
     )
 
     trainer = DDQTrainer()
