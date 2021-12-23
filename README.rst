@@ -21,6 +21,25 @@ Requirements
    For linux you will need to compile my `custom branch <https://github.com/EpicGames/UnrealEngine/pull/8745>`_ from source.
 
 
+Packaged Install
+~~~~~~~~~~~~~~~~
+
+Unfortunately U4ML python package is not open source and you will need to
+create an Epic account to instal it on your machine.
+
+.. code-block:: bash
+
+   # Install UE4ML python package
+   python -e UnrealEngine/Engine/Plugins/AI/UE4ML/Source/python
+
+   # Download the cartpole environment
+   wget https://github.com/Delaunay/cartpole/releases/download/0.0.0-package-test/cartpole-0.0.0-py3-none-any.whl
+   pip install cartpole-0.0.0-py3-none-any.whl
+
+   # run the packaged environment
+   python ...
+
+
 Development Install
 ~~~~~~~~~~~~~~~~~~~
 
@@ -32,7 +51,10 @@ Install the python package to run this example as a gym environment
    cd cartpole
    pip install -e .
 
-   // this will compile the project
+   # Install UE4ML python package
+   python -e UnrealEngine/Engine/Plugins/AI/UE4ML/Source/python
+
+   # this will compile the project
    UE4Editor Cartpole.uproject
 
 

@@ -25,7 +25,6 @@ Why UnrealEngine
 * All UnrealEngine technologies available to develop new cutting edge environments
 * Easy to port research into the real world
 * Easy to develop and redistribute environments
-* Completely free
 
 
 About UE4ML

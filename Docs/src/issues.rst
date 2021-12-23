@@ -4,7 +4,7 @@ Known Issues
 Cartpole Bugs
 ~~~~~~~~~~~~~
 
-* Pole Initial push is in effective after a few level restart
+* Pole Initial push is ineffective after a few level restarts, might be related to the PlayerController issue
 
 
 UE4ML Bugs
