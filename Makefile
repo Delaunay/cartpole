@@ -2,19 +2,19 @@
 # *DO NOT EDIT*
 
 UNREALROOTPATH = /media/setepenre/Games/UnrealEngine
-GAMEPROJECTFILE =/media/setepenre/Games/CP/CP.uproject
+GAMEPROJECTFILE =/media/setepenre/Games/cartpole/Cartpole.uproject
 
 TARGETS = \
-	CP-Linux-Debug  \
-	CP-Linux-DebugGame  \
-	CP-Linux-Shipping  \
-	CP-Linux-Test  \
-	CP \
-	CPEditor-Linux-Debug  \
-	CPEditor-Linux-DebugGame  \
-	CPEditor-Linux-Shipping  \
-	CPEditor-Linux-Test  \
-	CPEditor \
+	Cartpole-Linux-Debug  \
+	Cartpole-Linux-DebugGame  \
+	Cartpole-Linux-Shipping  \
+	Cartpole-Linux-Test  \
+	Cartpole \
+	CartpoleEditor-Linux-Debug  \
+	CartpoleEditor-Linux-DebugGame  \
+	CartpoleEditor-Linux-Shipping  \
+	CartpoleEditor-Linux-Test  \
+	CartpoleEditor \
 	BenchmarkTool-Linux-Debug  \
 	BenchmarkTool-Linux-DebugGame  \
 	BenchmarkTool-Linux-Shipping  \
@@ -329,35 +329,35 @@ StandardSet: RequiredTools UnrealFrontend UE4Editor UnrealInsights
 DebugSet: RequiredTools UnrealFrontend-Linux-Debug UE4Editor-Linux-Debug
 
 
-CP-Linux-Debug:
-	 $(PROJECTBUILD) CP Linux Debug  -project="$(GAMEPROJECTFILE)" $(ARGS)
+Cartpole-Linux-Debug:
+	 $(PROJECTBUILD) Cartpole Linux Debug  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-CP-Linux-DebugGame:
-	 $(PROJECTBUILD) CP Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
+Cartpole-Linux-DebugGame:
+	 $(PROJECTBUILD) Cartpole Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-CP-Linux-Shipping:
-	 $(PROJECTBUILD) CP Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
+Cartpole-Linux-Shipping:
+	 $(PROJECTBUILD) Cartpole Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-CP-Linux-Test:
-	 $(PROJECTBUILD) CP Linux Test  -project="$(GAMEPROJECTFILE)" $(ARGS)
+Cartpole-Linux-Test:
+	 $(PROJECTBUILD) Cartpole Linux Test  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-CP:
-	 $(PROJECTBUILD) CP Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
+Cartpole:
+	 $(PROJECTBUILD) Cartpole Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-CPEditor-Linux-Debug:
-	 $(PROJECTBUILD) CPEditor Linux Debug  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CartpoleEditor-Linux-Debug:
+	 $(PROJECTBUILD) CartpoleEditor Linux Debug  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-CPEditor-Linux-DebugGame:
-	 $(PROJECTBUILD) CPEditor Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CartpoleEditor-Linux-DebugGame:
+	 $(PROJECTBUILD) CartpoleEditor Linux DebugGame  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-CPEditor-Linux-Shipping:
-	 $(PROJECTBUILD) CPEditor Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CartpoleEditor-Linux-Shipping:
+	 $(PROJECTBUILD) CartpoleEditor Linux Shipping  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-CPEditor-Linux-Test:
-	 $(PROJECTBUILD) CPEditor Linux Test  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CartpoleEditor-Linux-Test:
+	 $(PROJECTBUILD) CartpoleEditor Linux Test  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
-CPEditor:
-	 $(PROJECTBUILD) CPEditor Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
+CartpoleEditor:
+	 $(PROJECTBUILD) CartpoleEditor Linux Development  -project="$(GAMEPROJECTFILE)" $(ARGS)
 
 BenchmarkTool-Linux-Debug:
 	 $(BUILD) BenchmarkTool Linux Debug  -project="$(GAMEPROJECTFILE)" $(ARGS)
@@ -1261,6 +1261,6 @@ UE4Server:
 
 configure:
 	xbuild /property:Configuration=Development /verbosity:quiet /nologo "$(UNREALROOTPATH)/Engine/Source/Programs/UnrealBuildTool/UnrealBuildTool.csproj"
-	$(PROJECTBUILD) -projectfiles -project="\"$(GAMEPROJECTFILE)\"" -game -engine
+	$(PROJECTBUILD) -projectfiles -project="\"$(GAMEPROJECTFILE)\"" -game -engine 
 
 .PHONY: $(TARGETS)
