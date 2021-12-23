@@ -65,6 +65,8 @@ Installation
    src/game
    src/launching
    src/training
+   src/packaging
+   src/issues
 
 
 References
