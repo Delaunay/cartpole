@@ -31,3 +31,10 @@ CP.kdev4
 
 __pycache__/
 cartpole.egg-info/
+CMakeLists.txt
+Cartpole.code-workspace
+Cartpole.kdev4
+Cartpole.workspace
+CartpoleCodeCompletionFolders.txt
+CartpoleCodeLitePreProcessor.txt
+out.txt
