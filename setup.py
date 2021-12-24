@@ -58,5 +58,9 @@ if __name__ == "__main__":
         packages=["cartpole"],
         package_dir={"": "Source/python"},
         package_data={"cartpole": find_package_data()},
-        # include_package_data=True,
+        entry_points={
+            "console_scripts": [
+                "cartpole-train = cartpole.train:main",
+            ],
+        },
     )

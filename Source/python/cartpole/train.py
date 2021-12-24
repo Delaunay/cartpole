@@ -87,8 +87,9 @@ def select(cond, a, b):
 
 
 class DDQTrainer:
-    def __init__(self) -> None:
+    def __init__(self, env) -> None:
         self.use_image = True
+        self.env = env
         self.input_size = select(
             self.use_image,
             (3, 32, 32),
@@ -199,7 +200,7 @@ class DDQTrainer:
 
         for i_episode in range(episodes):
             # Initialize the environment and state
-            state = self.preprocess_obs(env.reset())
+            state = self.preprocess_obs(self.env.reset())
 
             for t in count():
                 # Select and perform an action
@@ -212,7 +213,7 @@ class DDQTrainer:
                 msg = f'{msg}{" " * (80 - len(msg))}'
 
                 print(msg, end="")
-                obs, reward, done, _ = env.step(rpc_action)
+                obs, reward, done, _ = self.env.step(rpc_action)
                 reward = reward * t / 200
 
                 obs = self.preprocess_obs(obs)
@@ -243,40 +244,47 @@ class DDQTrainer:
                 self.target.load_state_dict(self.policy.state_dict())
 
 
-if __name__ == "__main__":
-    #
-    # python Source/python/cartpole/train.py --project E:/cartpole/Cartpole.uproject --exec E:/UnrealEngine/Engine/Binaries/Win64/UE4Editor.exe
-    # python Source/python/cartpole/train.py --project /media/setepenre/Games/cartpole/Cartpole.uproject --exec /media/setepenre/Games/UnrealEngine/Engine/Binaries/Linux/UE4Editor
-
+def main():
     from ue4ml.runner import UE4Params
     from ue4ml.utils import ArgumentParser
 
     parser = ArgumentParser()
     parser.add_argument(
-        "--project", type=str, default=project, help="Path to the uproject"
+        "--project", type=str, default=None, help="Path to the uproject"
     )
-
     parser.add_argument(
         "--launch",
         action="store_true",
-        default=False,
+        default=True,
         help="If true the game will be launched by python",
+    )
+    parser.add_argument(
+        "--no-launch",
+        action="store_false",
+        dest="launch",
+        help="Force the environment to connect to an already running instance of the game",
     )
     args = parser.parse_args()
 
-    env = Cartpole(
-        args.project,
-        ue4params=UE4Params(rendering=True, single_thread=True)
-        if args.launch
-        else None,
-        server_port=15151,
-    )
+    ue4params = UE4Params(rendering=True, single_thread=True)
 
-    trainer = DDQTrainer()
+    if not args.launch:
+        ue4params = None
 
-    # print(env.action_space)
-    # print(list(map(float, gym.spaces.flatten(env.action_space, 0))))
-    # print(list(map(float, gym.spaces.flatten(env.action_space, 1))))
-    # print(gym.spaces.Discrete(2).sample())
+    with Cartpole(args.project, ue4params=ue4params, server_port=15151) as env:
 
-    trainer.train(500)
+        trainer = DDQTrainer(env)
+
+        # print(env.action_space)
+        # print(list(map(float, gym.spaces.flatten(env.action_space, 0))))
+        # print(list(map(float, gym.spaces.flatten(env.action_space, 1))))
+        # print(gym.spaces.Discrete(2).sample())
+
+        trainer.train(500)
+
+
+if __name__ == "__main__":
+    #
+    # python Source/python/cartpole/train.py --project E:/cartpole/Cartpole.uproject --exec E:/UnrealEngine/Engine/Binaries/Win64/UE4Editor.exe
+    # python Source/python/cartpole/train.py --project /media/setepenre/Games/cartpole/Cartpole.uproject --exec /media/setepenre/Games/UnrealEngine/Engine/Binaries/Linux/UE4Editor
+    main()

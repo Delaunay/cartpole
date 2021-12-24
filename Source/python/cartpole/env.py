@@ -3,9 +3,13 @@ from ue4ml.core import AgentConfig
 
 import pkg_resources
 
-cartpole_linux = pkg_resources.resource_filename(
-    __name__, "Cooked/LinuxNoEditor/Cartpole/Binaries/Linux/Cartpole"
-)
+try:
+    cartpole_linux = pkg_resources.resource_filename(
+        __name__, "Cooked/LinuxNoEditor/Cartpole/Binaries/Linux/Cartpole"
+    )
+except Exception:
+    cartpole_linux = None
+    print("Cooked environment not available")
 
 
 class Cartpole(UnrealEnv):
@@ -13,13 +17,18 @@ class Cartpole(UnrealEnv):
     PROJECT_NAME = None
     USE_IMAGE = True
 
-    def __init__(self, path, ue4params=None, **kwargs):
+    def __init__(self, path=None, ue4params=None, **kwargs):
+        if path is None:
+            path = cartpole_linux
+
         Cartpole.PROJECT_NAME = path
 
         if ue4params is not None:
             ue4params.set_default_map_name(Cartpole.MAP)
 
-        super().__init__(ue4params=ue4params, **kwargs)
+        super().__init__(
+            ue4params=ue4params, standalone=cartpole_linux is not None, **kwargs
+        )
 
     @staticmethod
     def default_agent_config():

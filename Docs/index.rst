@@ -35,7 +35,7 @@ Why UnrealEngine
 About UE4ML
 ~~~~~~~~~~~
 
-UE4ML was made to be the least intruisive as possible, this means that
+UE4ML was made to be as unintrusive as possible, this means that
 you will need to modify very little of your game (if anything) to turn it into
 a reinforcement learning environment.
 
@@ -54,7 +54,7 @@ Installation
 
 .. note::
 
-   This tutorial use UnrealEngine 4.27.2, newer version should work
+   This tutorial use UnrealEngine 4.27.2, newer version should work as well
 
 
 1. Install UnrealEngine

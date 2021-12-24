@@ -41,5 +41,7 @@ Cartpole.workspace
 CartpoleCodeCompletionFolders.txt
 CartpoleCodeLitePreProcessor.txt
 out.txt
+
 build/
 dist/
+ue4logs.txt

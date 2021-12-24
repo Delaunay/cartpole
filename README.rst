@@ -1,11 +1,11 @@
 Cartpole
 ========
 
-Reimplementation of the cartpole environment in UE4 as a demo of the UE4ML plugin
-
 .. image:: https://readthedocs.org/projects/cartpole/badge/?version=latest
    :target: https://cartpole.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
+
+Reimplementation of the cartpole environment in UE4 as a demo of the UE4ML plugin
 
 .. image:: Cartpole_big.png
 
@@ -36,8 +36,8 @@ create an Epic account to instal it on your machine.
    wget https://github.com/Delaunay/cartpole/releases/download/0.0.0-package-test/cartpole-0.0.0-py3-none-any.whl
    pip install cartpole-0.0.0-py3-none-any.whl
 
-   # run the packaged environment
-   python ...
+   # run the packaged environment for training
+   cartpole-train
 
 
 Development Install
