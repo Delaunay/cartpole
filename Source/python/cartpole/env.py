@@ -38,7 +38,9 @@ class Cartpole(UnrealEnv):
         agent_config.avatarClassName = "Pawn_Cart_C"
 
         # Actuators define the action space
-        agent_config.add_actuator("InputKey")
+        agent_config.add_actuator(
+            "InputKey", dict(ignore_keys="esc", ignore_actions="Quit")
+        )
 
         # Sensors define the observation space
         if Cartpole.USE_IMAGE:

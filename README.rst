@@ -37,7 +37,7 @@ create an Epic account to instal it on your machine.
    pip install cartpole-0.0.0-py3-none-any.whl
 
    # run the packaged environment for training
-   cartpole-train
+   cartpole-train --launch
 
 
 Development Install
@@ -56,6 +56,11 @@ Install the python package to run this example as a gym environment
 
    # this will compile the project
    UE4Editor Cartpole.uproject
+
+   # Click play in the editor to start the game
+
+   # this will connect to the game running inside the editor
+   cartpole-train --no-launch
 
 
 To run the example just launch the appropriate script
