@@ -1,6 +1,9 @@
 Cartpole as a gym environment
 =============================
 
+`Gym <https://gym.openai.com/>`_ is a interface to create reinforcement learning environments.
+
+
 Python
 ~~~~~~
 
@@ -19,6 +22,10 @@ Python
    ``ue4ml`` requires ``msgpack-rpc-python`` which is badly out of date.
    The required tornado version is particularly old ``tornado >= 3,<5``
    This might break your environment. You should build a virtualenv just for UE4.
+
+   You can use `UE4ML_Tweaks <https://github.com/EpicGames/UnrealEngine/pull/8748>`_
+   to avoid ``msgpack-rpc-python``
+
 
 .. warning::
 
@@ -281,6 +288,7 @@ to your cartpole uproject.
 References
 ~~~~~~~~~~
 
+.. [#] `Gym <https://gym.openai.com/>`_
 .. [#] `ROCm website <https://rocmdocs.amd.com/en/latest/>`_
 .. [#] `Enable_U4ML_Linux branch <https://github.com/Delaunay/UnrealEngine/tree/Enable_U4ML_Linux>`_
 .. [#] `conda <https://docs.conda.io/en/latest/miniconda.html>`_

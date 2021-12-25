@@ -1,7 +1,7 @@
 Make the cartpole game
 ~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: _static/cartpole_overview.png
+.. image:: /_static/cartpole_overview.png
    :width: 100%
 
 

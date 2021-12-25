@@ -7,11 +7,7 @@ Now it is time to train a neural net work that will learn to perform
 the right action given the state of the game.
 
 
-.. image:: _static/cartpole_overview.png
-   :width: 100%
-
-
-.. image:: _static/training.png
+.. image:: /_static/training.png
    :width: 100%
 
 
