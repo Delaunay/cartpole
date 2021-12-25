@@ -53,13 +53,17 @@ class LeNet(nn.Module):
         self.end   = nn.Softmax(dim=1)
 
     def forward(self, x):
+        # For DQN, the value returned is the estimated reward
+        # each action will give us
         out = nn.functional.relu(self.conv1(x))
         out = self.pool1(out)
         out = nn.functional.relu(self.conv2(out))
         out = self.pool2(out)
         out = out.view(out.size(0), -1)
         out = nn.functional.relu(self.fc1(out))
-        out = self.fc2(out)
+        return self.fc2(out)
 
-        # this layer is ot part of the paper
+    def action_probs(self, x):
+        # Sometimes we want it normalized
+        out = self.forward(x)
         return self.end(out)

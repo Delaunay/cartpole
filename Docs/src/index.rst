@@ -16,6 +16,9 @@ to focus on how to setup a project for machine learning, then we will train a ne
 
 The notions seen in this project are applicable to any games made using UnrealEngine.
 
+This project does not aim to introduce you to UE4 nor to teach your machine learning;
+some knownledge of both is expected.
+
 
 Why UnrealEngine
 ~~~~~~~~~~~~~~~~
@@ -31,6 +34,7 @@ Cartpole
 ~~~~~~~~
 
 .. toctree::
+   :maxdepth: 2
 
    install
    ue4ml

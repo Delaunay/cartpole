@@ -145,7 +145,7 @@ class DDQTrainer:
             # self.policy(state).max(1)[1].view(1, 1)
 
             # with exploration
-            weights = self.policy(state)
+            weights = self.policy.action_probs(state)
             dist = Categorical(weights)
             action = dist.sample()
 
