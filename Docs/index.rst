@@ -50,6 +50,17 @@ focusing on the machine learning side while developers can focus on the environm
 While the cartpole environment is using a bit of C++ most of it was written to expose functionallity to
 blueprint, as such very little C++ knownledge is necessary to build a custom environment.
 
+In a nutshell
+^^^^^^^^^^^^^
+
+.. image:: _static/cartpole_setup.png
+   :width: 100%
+
+
+.. image:: _static/UE4ML_System.png
+   :width: 100%
+
+
 Installation
 ~~~~~~~~~~~~
 

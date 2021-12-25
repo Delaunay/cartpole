@@ -1,6 +1,10 @@
 Make the cartpole game
 ~~~~~~~~~~~~~~~~~~~~~~
 
+.. image:: _static/cartpole_overview.png
+   :width: 100%
+
+
 You will need to specialize 3 classes in C++.
 
 * ``ACPPlayerState`` to expose `SetScore <https://docs.unrealengine.com/4.27/en-US/API/Runtime/Engine/GameFramework/APlayerState/SetScore/>`_
