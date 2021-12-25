@@ -116,20 +116,38 @@ class DDQTrainer:
         self.memory = ReplayMemory(10000)
         self.loss = 0
         self.loss_count = 0
+        self.steps_done = 0
+
 
     def select_action(self, state):
+        sample = random.random()
+        eps_threshold = EPS_END + (EPS_START - EPS_END) * \
+            math.exp(-1. *self. steps_done / EPS_DECAY)
+
+        self.steps_done += 1
+        if sample > eps_threshold:
+            with torch.no_grad():
+                # t.max(1) will return largest column value of each row.
+                # second column on max result is index of where max element was
+                # found, so we pick action with the larger expected reward.
+                return self.policy(state).max(1)[1].view(1, 1)
+        else:
+            return torch.tensor([[random.randrange(self.output_size)]], device=self.device, dtype=torch.long)
+
+    def _select_action(self, state):
         """Our model does not return the action perse but the distribution of all the action"""
 
         with torch.no_grad():
             # Our batch is size=1 here
             state = state.unsqueeze(0).to(self.device)
 
-            weights = self.policy(state)
+            # without exploration
+            # self.policy(state).max(1)[1].view(1, 1)
 
+            # with exploration
+            weights = self.policy(state)
             dist = Categorical(weights)
             action = dist.sample()
-
-            # print('Action: ', action.item(), random_action(env))
 
             log_prob = dist.log_prob(action).unsqueeze(1)
             return action, log_prob, dist.entropy(), weights
@@ -164,6 +182,8 @@ class DDQTrainer:
         # Compute Q(s_t, a) - the model computes Q(s_t), then we select the
         # columns of actions taken. These are the actions which would've been taken
         # for each batch state according to policy_net
+
+        # Get the probability of the action given the action taken
         state_action_values = self.policy(state_batch).gather(1, action_batch)
 
         next_state_values = torch.zeros(BATCH_SIZE, device=self.device)
