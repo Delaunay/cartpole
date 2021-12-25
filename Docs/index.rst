@@ -3,19 +3,19 @@ Cartpole
 
 .. raw:: html
 
-   <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/yQzQcLWakW4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+   <iframe width="100%" height="315" src="https://www.youtube-nocookie.com/embed/yQzQcLWakW4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 This project demonstrates how to use UE4ML to create a reinforcement learning
 environment for machine learning.
 
-From `Wikipedia <https://en.wikipedia.org/wiki/Machine_learning>`_
-
    Machine learning (ML) is the study of computer algorithms that can improve automatically through experience and by the use of data.
    It is seen as a part of artificial intelligence. Machine learning algorithms build a model based on sample data,
    known as training data, in order to make predictions or decisions without being explicitly programmed to do so.
 
-We will recreate the famous `Cartpole environment <https://gym.openai.com/envs/CartPole-v0/>`_,
+   -- From `Wikipedia <https://en.wikipedia.org/wiki/Machine_learning>`_
+
+We will recreate the famous |Cartpole Env|,
 which is a very simple environment that is straight forward to implement and yet will enable us
 to focus on how to setup a project for machine learning, then we will train a neural network to play our game.
 
@@ -25,7 +25,8 @@ The notions seen in this project are applicable to any games made using UnrealEn
 Why UnrealEngine
 ~~~~~~~~~~~~~~~~
 
-* UnrealEngine is essentially open-source. The source is proprietary and technically private but you can get access by simply creating an Epic Account.
+* UnrealEngine is essentially open-source.
+  The source is proprietary and technically private but you can get access by simply creating an Epic Account.
 * The licencing is perfect for academia (See Creators LICENSE)
 * All UnrealEngine technologies available to develop new cutting edge environments
 * Easy to port research into the real world
@@ -41,8 +42,8 @@ a reinforcement learning environment.
 
 The main requirements that would need to be addressed are:
 
-* Reward: a value that quantify how well your agent/neural network is doing (i.e a score)
-* ResetLevel: the ability to restart a level when the agent dies
+* ``Reward``: a value that quantify how well your agent/neural network is doing (i.e a score)
+* ``ResetLevel``: the ability to restart a level when the agent dies
 
 Because of it unintrusive design, ML-researchers will spend their time on the python side
 focusing on the machine learning side while developers can focus on the environment itself.
@@ -76,9 +77,17 @@ Installation
 References
 ~~~~~~~~~~
 
-* `UE4ML Documentation <https://docs.unrealengine.com/4.27/en-US/API/Plugins/UE4ML/>`_
-* `OpenAI Gym <https://gym.openai.com/>`_
-* `PyTorch Documentation <https://pytorch.org/>`_
+.. [#] |Cartpole Env|
+.. [#] |ML|
+.. [#] `UE4ML Documentation <https://docs.unrealengine.com/4.27/en-US/API/Plugins/UE4ML/>`_
+.. [#] `OpenAI Gym <https://gym.openai.com/>`_
+.. [#] `PyTorch Documentation <https://pytorch.org/>`_
+
+.. |ML| replace:: `Machine Learning`_
+.. _Machine Learning: https://en.wikipedia.org/wiki/Machine_learning
+
+.. |Cartpole Env| replace:: `Cartpole Environment`_
+.. _Cartpole Environment: https://gym.openai.com/envs/CartPole-v0/
 
 
 Code Documentation
@@ -89,4 +98,3 @@ Code Documentation
 
    api/cartpole
    python/index
-

@@ -3,9 +3,12 @@ Make the cartpole game
 
 You will need to specialize 3 classes in C++.
 
-* ``ACPPlayerState`` to expose `SetScore <https://docs.unrealengine.com/4.27/en-US/API/Runtime/Engine/GameFramework/APlayerState/SetScore/>`_ to blueprint, this will be used to create a custom reward function
-* ``ACPPawn`` to make the pawn hostile to everybody, this makes ``AISense_Sight`` sense all the pawn that are in range
-* ``ACPGameMode`` to provide a custom ``HasMatchEnded`` that is used to reset the environment
+* ``ACPPlayerState`` to expose `SetScore <https://docs.unrealengine.com/4.27/en-US/API/Runtime/Engine/GameFramework/APlayerState/SetScore/>`_
+  to blueprint, this will be used to create a custom reward function
+* ``ACPPawn`` to make the pawn hostile to everybody,
+  this makes ``AISense_Sight`` sense all the pawn that are in range
+* ``ACPGameMode`` to provide a custom ``HasMatchEnded``
+  that is used to reset the environment
 
 From there everything can be done in blueprint.
 You will need to create the blueprints below.
@@ -48,7 +51,8 @@ Pawn_Pole
 
 * The pole is a single cylinder
 * Enable physics on the cylinder.
-* You can modify Linear Damping and Angular Damping properties to make the pole easier to balance.
+* You can modify Linear Damping and Angular Damping
+  properties to make the pole easier to balance.
 
 .. raw:: html
 

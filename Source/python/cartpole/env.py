@@ -3,23 +3,37 @@ from ue4ml.core import AgentConfig
 
 import pkg_resources
 
-try:
-    cartpole_linux = pkg_resources.resource_filename(
-        __name__, "Cooked/LinuxNoEditor/Cartpole/Binaries/Linux/Cartpole"
-    )
-except Exception:
-    cartpole_linux = None
-    print("Cooked environment not available")
+
+def load_exec(name):
+    try:
+        return pkg_resources.resource_filename(__name__, name)
+    except Exception:
+        return None
+
+
+cartpole_linux = load_exec("Cooked/LinuxNoEditor/Cartpole.sh")
+cartpole_windows = load_exec("Cooked/WindowsNoEditor/Cartpole.exe")
 
 
 class Cartpole(UnrealEnv):
+    """
+    Parameters
+    ----------
+    path: str
+        path to the project file (.uproject), leave to None to use the packaged version
+
+    ue4params: UE4Params
+        Unreal Engine additional parameters, leave to None to connect to a running instance
+
+    """
+
     MAP = "/Game/CartPole/CartPole.umap"
     PROJECT_NAME = None
     USE_IMAGE = True
 
     def __init__(self, path=None, ue4params=None, **kwargs):
         if path is None:
-            path = cartpole_linux
+            path = cartpole_windows
 
         Cartpole.PROJECT_NAME = path
 
@@ -27,7 +41,7 @@ class Cartpole(UnrealEnv):
             ue4params.set_default_map_name(Cartpole.MAP)
 
         super().__init__(
-            ue4params=ue4params, standalone=cartpole_linux is not None, **kwargs
+            ue4params=ue4params, standalone=cartpole_windows is not None, **kwargs
         )
 
     @staticmethod

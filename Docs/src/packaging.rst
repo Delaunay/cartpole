@@ -4,8 +4,8 @@ Packaging
 Once your RL environment is done you will want to package it
 for other people to use.
 
-1. `Cook the game <https://docs.unrealengine.com/4.27/en-US/SharingAndReleasing/Deployment/Cooking/>`_; this will generate a compact version of the 
-environment that can easily be redistributed.
+1. `Cook the game <https://docs.unrealengine.com/4.27/en-US/SharingAndReleasing/Deployment/Cooking/>`_
+   this will generate a compact version of the environment that can easily be redistributed.
 
 .. code-block:: python
 
@@ -13,7 +13,7 @@ environment that can easily be redistributed.
 
 
 2. Package the cooked game with your python code by adding
-all the files in the `package_data` section of setuptools
+   all the files in the `package_data` section of setuptools
 
 
 .. code-block:: python
@@ -38,3 +38,7 @@ all the files in the `package_data` section of setuptools
        __name__, "Cooked/LinuxNoEditor/Cartpole/Binaries/Linux/Cartpole"
    )
 
+References
+----------
+
+.. [#] `Cooking <https://docs.unrealengine.com/4.27/en-US/SharingAndReleasing/Deployment/Cooking/>`_

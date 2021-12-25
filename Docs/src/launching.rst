@@ -64,7 +64,8 @@ Additionally we will need to set our agent configuration which mainly consist of
 Define the action space
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The action space is defined by adding `U4MLActuator <https://docs.unrealengine.com/4.27/en-US/API/Plugins/UE4ML/Actuators/>`_ to the agent configuration.
+The action space is defined by adding `U4MLActuator <https://docs.unrealengine.com/4.27/en-US/API/Plugins/UE4ML/Actuators/>`_
+to the agent configuration.
 
 * Available actuators:
 
@@ -98,15 +99,19 @@ since only 1 Axis input that varies between -1 and 1.
 Define the observation space
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The observation space is defined by adding `U4MLSensor <https://docs.unrealengine.com/4.27/en-US/API/Plugins/UE4ML/Sensors/>`_ to the agent configuration.
+The observation space is defined by adding `U4MLSensor <https://docs.unrealengine.com/4.27/en-US/API/Plugins/UE4ML/Sensors/>`_
+to the agent configuration.
 
 * Available sensors:
 
    * AIPerception: hooks itself to the AI Perception system of UE4 (Note this is a Game-AI (Behavior Trees) system not ML-AI system)
 
-      * see `AI Perception <https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/ArtificialIntelligence/AIPerception/>`_ which include Hearing, Sight, Team (proximity of ally), Touch. Currently only Sight is supported, it is created by the UE4ML system and added to the player controller.
+      * see `AI Perception <https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/ArtificialIntelligence/AIPerception/>`_
+        which include Hearing, Sight, Team (proximity of ally), Touch. Currently only Sight is supported, it is created by the
+        UE4ML system and added to the player controller.
 
-   * Attribute: listen to attribute change if you are using `UAttributeSet <https://docs.unrealengine.com/4.27/en-US/API/Plugins/GameplayAbilities/UAttributeSet/>`_ for your character.
+   * Attribute: listen to attribute change if you are using
+     `UAttributeSet <https://docs.unrealengine.com/4.27/en-US/API/Plugins/GameplayAbilities/UAttributeSet/>`_ for your character.
    * Camera: Make a camera capture of the scene
    * Input: Capture the inputs
 
@@ -271,3 +276,16 @@ to your cartpole uproject.
 .. note::
 
    Only Windows was tested
+
+
+References
+~~~~~~~~~~
+
+.. [#] `ROCm website <https://rocmdocs.amd.com/en/latest/>`_
+.. [#] `Enable_U4ML_Linux branch <https://github.com/Delaunay/UnrealEngine/tree/Enable_U4ML_Linux>`_
+.. [#] `conda <https://docs.conda.io/en/latest/miniconda.html>`_
+.. [#] `pytorch <https://pytorch.org/get-started/locally/>`_
+.. [#] `AI Perception <https://docs.unrealengine.com/4.27/en-US/InteractiveExperiences/ArtificialIntelligence/AIPerception/>`_
+.. [#] `U4MLSensor <https://docs.unrealengine.com/4.27/en-US/API/Plugins/UE4ML/Sensors/>`_
+.. [#] `UAttributeSet <https://docs.unrealengine.com/4.27/en-US/API/Plugins/GameplayAbilities/UAttributeSet/>`_
+

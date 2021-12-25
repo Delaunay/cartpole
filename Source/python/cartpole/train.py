@@ -266,10 +266,10 @@ def main():
     )
     args = parser.parse_args()
 
-    ue4params = UE4Params(rendering=True, single_thread=True)
+    ue4params = None
 
-    if not args.launch:
-        ue4params = None
+    if args.launch:
+        ue4params = UE4Params(rendering=True, single_thread=True)
 
     with Cartpole(args.project, ue4params=ue4params, server_port=15151) as env:
 
