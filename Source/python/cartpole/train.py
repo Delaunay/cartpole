@@ -127,12 +127,16 @@ class DDQTrainer:
         self.steps_done += 1
         if sample > eps_threshold:
             with torch.no_grad():
+                state = state.unsqueeze(0).to(self.device)
+
                 # t.max(1) will return largest column value of each row.
                 # second column on max result is index of where max element was
                 # found, so we pick action with the larger expected reward.
-                return self.policy(state).max(1)[1].view(1, 1)
+                expected_reward = self.policy(state)
+                action = expected_reward.max(1)[1]
+                return action, 0, 0, 0
         else:
-            return torch.tensor([[random.randrange(self.output_size)]], device=self.device, dtype=torch.long)
+            return torch.tensor([random.randrange(self.output_size)], device=self.device, dtype=torch.long), 0, 0, 0
 
     def _select_action(self, state):
         """Our model does not return the action perse but the distribution of all the action"""
@@ -261,6 +265,7 @@ class DDQTrainer:
 
             # Update the target network, copying all weights and biases in DQN
             if i_episode % TARGET_UPDATE == 0:
+                self.memory = ReplayMemory(10000)
                 self.target.load_state_dict(self.policy.state_dict())
 
 
