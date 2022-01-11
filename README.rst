@@ -13,7 +13,7 @@ Reimplementation of the cartpole environment in UE4 as a demo of the MLAdapter p
 Requirements
 ~~~~~~~~~~~~
 
-* UE4 - 4.27/master
+* UE4 - 4.27/master/5.1
 
 
 .. note::
@@ -23,6 +23,10 @@ Requirements
 .. note::
 
    For a more reliable experience you can use `UE4ML_Tweaks branch <https://github.com/Delaunay/UnrealEngine/tree/UE4ML_Tweaks>`_
+
+.. note::
+
+   For UE5 on linux you will need to disable 2 plugins (XGEController and FastBuildController as of Jan 2022)
 
 
 Packaged Install
