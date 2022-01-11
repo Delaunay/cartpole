@@ -1,11 +1,11 @@
-from ue4ml import UnrealEnv
-from ue4ml.core import AgentConfig
+from MLAdapter import UnrealEnv
+from MLAdapter.core import AgentConfig
 
 import pkg_resources
 
 try:
     cartpole_linux = pkg_resources.resource_filename(
-        __name__, "Cooked/LinuxNoEditor/Cartpole/Binaries/Linux/Cartpole"
+        __name__, "Cooked/LinuxNoEditor/Cartpole/Binaries/Linux/Cartpole-Linux-Debug"
     )
 except Exception:
     cartpole_linux = None

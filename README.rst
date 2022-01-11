@@ -5,7 +5,7 @@ Cartpole
    :target: https://cartpole.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
-Reimplementation of the cartpole environment in UE4 as a demo of the UE4ML plugin
+Reimplementation of the cartpole environment in UE4 as a demo of the MLAdapter plugin
 
 .. image:: Cartpole_big.png
 
@@ -29,8 +29,8 @@ create an Epic account to instal it on your machine.
 
 .. code-block:: bash
 
-   # Install UE4ML python package
-   python -e UnrealEngine/Engine/Plugins/AI/UE4ML/Source/python
+   # Install MLAdapter python package
+   python -e UnrealEngine/Engine/Plugins/AI/MLAdapter/Source/python
 
    # Download the cartpole environment
    wget https://github.com/Delaunay/cartpole/releases/download/0.0.0-package-test/cartpole-0.0.0-py3-none-any.whl
@@ -43,6 +43,11 @@ create an Epic account to instal it on your machine.
 Development Install
 ~~~~~~~~~~~~~~~~~~~
 
+.. note::
+
+   This repo started using UE5 after commit ``332ae357235995d1184effdb060``
+
+
 Install the python package to run this example as a gym environment
 
 .. code-block:: bash
@@ -51,8 +56,8 @@ Install the python package to run this example as a gym environment
    cd cartpole
    pip install -e .
 
-   # Install UE4ML python package
-   python -e UnrealEngine/Engine/Plugins/AI/UE4ML/Source/python
+   # Install MLAdapter python package
+   python -e UnrealEngine/Engine/Plugins/AI/MLAdapter/Source/python
 
    # this will compile the project
    UE4Editor Cartpole.uproject

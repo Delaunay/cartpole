@@ -9,8 +9,8 @@ import gym.spaces
 
 from torch.distributions import Categorical
 from torchvision.utils import save_image
-import ue4ml.logger as logger
-from ue4ml.utils import random_action
+import MLAdapter.logger as logger
+from MLAdapter.utils import random_action
 
 from cartpole.env import Cartpole
 from cartpole.model import MLP, LeNet
@@ -214,7 +214,7 @@ class DDQTrainer:
 
                 print(msg, end="")
                 obs, reward, done, _ = self.env.step(rpc_action)
-                reward = reward * t / 200
+                reward = (t > 100) * reward
 
                 obs = self.preprocess_obs(obs)
 
@@ -245,8 +245,8 @@ class DDQTrainer:
 
 
 def main():
-    from ue4ml.runner import UE4Params
-    from ue4ml.utils import ArgumentParser
+    from MLAdapter.runner import UE4Params
+    from MLAdapter.utils import ArgumentParser
 
     parser = ArgumentParser()
     parser.add_argument(

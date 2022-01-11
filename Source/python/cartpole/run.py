@@ -2,9 +2,9 @@
 import os
 
 from cartpole.env import Cartpole
-from ue4ml.utils import random_action, ArgumentParser
-from ue4ml.runner import UE4Params
-import ue4ml.logger as logger
+from MLAdapter.utils import random_action, ArgumentParser
+from MLAdapter.runner import UE4Params
+import MLAdapter.logger as logger
 
 project = '/media/setepenre/Games/UE4RL/UE4RL.uproject'
 project = 'E:/cartpole/UE4RL.uproject'

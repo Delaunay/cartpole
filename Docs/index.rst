@@ -6,7 +6,7 @@ Cartpole
    <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/yQzQcLWakW4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
-This project demonstrates how to use UE4ML to create a reinforcement learning
+This project demonstrates how to use MLAdapter to create a reinforcement learning
 environment for machine learning.
 
 From `Wikipedia <https://en.wikipedia.org/wiki/Machine_learning>`_
@@ -32,10 +32,10 @@ Why UnrealEngine
 * Easy to develop and redistribute environments
 
 
-About UE4ML
+About MLAdapter
 ~~~~~~~~~~~
 
-UE4ML was made to be as unintrusive as possible, this means that
+MLAdapter was made to be as unintrusive as possible, this means that
 you will need to modify very little of your game (if anything) to turn it into
 a reinforcement learning environment.
 
@@ -57,10 +57,16 @@ Installation
    This tutorial use UnrealEngine 4.27.2, newer version should work as well
 
 
+.. note::
+
+   UE5 renamed UE4ML to MLAdapter
+
+
+
 1. Install UnrealEngine
 2. Create a new blank C++ project
 
-   * Enable UE4ML plugin (Setting > Plugins > UE4 support for ML)
+   * Enable MLAdapter plugin (Setting > Plugins > UE4 support for ML)
 
 
 .. toctree::
@@ -77,6 +83,7 @@ References
 ~~~~~~~~~~
 
 * `UE4ML Documentation <https://docs.unrealengine.com/4.27/en-US/API/Plugins/UE4ML/>`_
+* `ML Adapter Documentation <https://docs.unrealengine.com/5.0/en-US/5.0/en-US/5/en-US/API/Plugins/MLAdapter>`_
 * `OpenAI Gym <https://gym.openai.com/>`_
 * `PyTorch Documentation <https://pytorch.org/>`_
 

@@ -16,7 +16,7 @@
 	],
 	"Plugins": [
 		{
-			"Name": "UE4ML",
+			"Name": "MLAdapter",
 			"Enabled": true
 		},
 		{
