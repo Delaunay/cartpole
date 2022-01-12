@@ -9,8 +9,8 @@ import gym.spaces
 
 from torch.distributions import Categorical
 from torchvision.utils import save_image
-import MLAdapter.logger as logger
-from MLAdapter.utils import random_action
+import unreal.mladapter.logger as logger
+from unreal.mladapter.utils import random_action
 
 from cartpole.env import Cartpole
 from cartpole.model import MLP, LeNet
@@ -118,11 +118,11 @@ class DDQTrainer:
         self.loss_count = 0
         self.steps_done = 0
 
-
     def select_action(self, state):
         sample = random.random()
-        eps_threshold = EPS_END + (EPS_START - EPS_END) * \
-            math.exp(-1. *self. steps_done / EPS_DECAY)
+        eps_threshold = EPS_END + (EPS_START - EPS_END) * math.exp(
+            -1.0 * self.steps_done / EPS_DECAY
+        )
 
         self.steps_done += 1
         if sample > eps_threshold:
@@ -136,7 +136,16 @@ class DDQTrainer:
                 action = expected_reward.max(1)[1]
                 return action, 0, 0, 0
         else:
-            return torch.tensor([random.randrange(self.output_size)], device=self.device, dtype=torch.long), 0, 0, 0
+            return (
+                torch.tensor(
+                    [random.randrange(self.output_size)],
+                    device=self.device,
+                    dtype=torch.long,
+                ),
+                0,
+                0,
+                0,
+            )
 
     def _select_action(self, state):
         """Our model does not return the action perse but the distribution of all the action"""
@@ -225,6 +234,7 @@ class DDQTrainer:
         for i_episode in range(episodes):
             # Initialize the environment and state
             state = self.preprocess_obs(self.env.reset())
+            envlog.write(f'{state.sum()}\n')
 
             for t in count():
                 # Select and perform an action
@@ -237,7 +247,11 @@ class DDQTrainer:
                 msg = f'{msg}{" " * (80 - len(msg))}'
 
                 print(msg, end="")
+
+                # We get a screenshot every 3 frames
                 obs, reward, done, _ = self.env.step(rpc_action)
+     
+                envlog.write(f'{obs.sum()} {reward} {done}\n')
                 reward = (t > 100) * reward
 
                 obs = self.preprocess_obs(obs)
@@ -270,8 +284,8 @@ class DDQTrainer:
 
 
 def main():
-    from MLAdapter.runner import UE4Params
-    from MLAdapter.utils import ArgumentParser
+    from unreal.mladapter.runner import UEParams
+    from unreal.mladapter.utils import ArgumentParser
 
     parser = ArgumentParser()
     parser.add_argument(
@@ -291,12 +305,12 @@ def main():
     )
     args = parser.parse_args()
 
-    ue4params = None
+    ueparams = None
 
     if args.launch:
-        ue4params = UE4Params(rendering=True, single_thread=True)
+        ueparams = UEParams(rendering=True, single_thread=True)
 
-    with Cartpole(args.project, ue4params=ue4params, server_port=15151) as env:
+    with Cartpole(args.project, ue_params=ueparams, server_port=15151) as env:
 
         trainer = DDQTrainer(env)
 
@@ -308,8 +322,21 @@ def main():
         trainer.train(500)
 
 
+class SafeWrite():
+    def __init__(self, file=None):
+        self.file = file
+
+    def write(self, msg):
+        if self.file:
+            self.file.write(msg)
+
+envlog = SafeWrite()
+
 if __name__ == "__main__":
-    #
-    # python Source/python/cartpole/train.py --project E:/cartpole/Cartpole.uproject --exec E:/UnrealEngine/Engine/Binaries/Win64/UE4Editor.exe
-    # python Source/python/cartpole/train.py --project /media/setepenre/Games/cartpole/Cartpole.uproject --exec /media/setepenre/Games/UnrealEngine/Engine/Binaries/Linux/UE4Editor
-    main()
+    with open('env.log', 'w') as file:
+        envlog.file = file
+
+        #
+        # python Source/python/cartpole/train.py --project E:/cartpole/Cartpole.uproject --exec E:/UnrealEngine/Engine/Binaries/Win64/UE4Editor.exe
+        # python Source/python/cartpole/train.py --project /media/setepenre/Games/cartpole/Cartpole.uproject --exec /media/setepenre/Games/UnrealEngine/Engine/Binaries/Linux/UE4Editor
+        main()

@@ -1,5 +1,5 @@
-from MLAdapter import UnrealEnv
-from MLAdapter.core import AgentConfig
+from unreal.mladapter import UnrealEnv
+from unreal.mladapter.core import AgentConfig
 
 import pkg_resources
 
@@ -22,7 +22,7 @@ class Cartpole(UnrealEnv):
     path: str
         path to the project file (.uproject), leave to None to use the packaged version
 
-    ue4params: UE4Params
+    ue_params: UEParams
         Unreal Engine additional parameters, leave to None to connect to a running instance
 
     """
@@ -31,17 +31,17 @@ class Cartpole(UnrealEnv):
     PROJECT_NAME = None
     USE_IMAGE = True
 
-    def __init__(self, path=None, ue4params=None, **kwargs):
+    def __init__(self, path=None, ue_params=None, **kwargs):
         if path is None:
             path = cartpole_windows
 
         Cartpole.PROJECT_NAME = path
 
-        if ue4params is not None:
-            ue4params.set_default_map_name(Cartpole.MAP)
+        if ue_params is not None:
+            ue_params.set_default_map_name(Cartpole.MAP)
 
         super().__init__(
-            ue4params=ue4params, standalone=cartpole_windows is not None, **kwargs
+            ue_params=ue_params, timeout=180, **kwargs # standalone=cartpole_windows is not None
         )
 
     @staticmethod
@@ -63,6 +63,12 @@ class Cartpole(UnrealEnv):
                 {
                     "width": "32",
                     "height": "32",
+
+                    # Note that value does not matter
+                    "tick_every_frame": "1",
+
+                    # tick_every_n_frames
+                    # tick_every_x_seconds
                 },
             )
             return agent_config

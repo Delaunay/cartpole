@@ -1,9 +1,13 @@
+build
+.vscode
 .git
 .kdev4
-.vscode
+Script
+Docs
 Content
 DerivedDataCache
-Docs
 Intermediate
+dist
+.github
+Cooked
 Saved
-Script
