@@ -1,7 +1,10 @@
 from unreal.mladapter import UnrealEnv
 from unreal.mladapter.core import AgentConfig
+from unreal.mladapter.socket import NoActiveSession
+from unreal.mladapter import logger
 
 import pkg_resources
+import time
 
 
 def load_exec(name):
@@ -43,6 +46,35 @@ class Cartpole(UnrealEnv):
         super().__init__(
             ue_params=ue_params, timeout=180, **kwargs # standalone=cartpole_windows is not None
         )
+
+    def reset(self, wait_action=None, skip_time=1):
+        """Specialize reset to reset our agents after each reset.
+        We need to do that because 
+        
+        """
+        if not self.is_connected():
+            raise NotConnected
+        logger.debug('{}: reset'.format(self._debug_id))
+
+        self.conn.reset()
+
+        # wait until game says it's not over
+        start = time.time()
+        try:
+            while not self.conn.is_ready():
+                if time.time() - start > self._timeout:
+                    raise TimeoutError(f"Waited more than {self._timeout} s for reset")
+
+                if self.action_space is not None:
+                    self.conn.act(self._agent_id, self.wrap_action(
+                        self.action_space.sample() if wait_action is None else wait_action))
+                self.skip(skip_time)
+
+        except NoActiveSession:
+            self._setup_agents(True)
+
+        self._steps_performed = 0
+        return self._get_observation()
 
     @staticmethod
     def default_agent_config():
