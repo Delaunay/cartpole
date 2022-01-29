@@ -12,6 +12,11 @@ jobs:
         # Setting > Developper Setting > Personnal Access Token
         password: ${{ secrets.CONTAINER_REGISTRY_PAT }}
 
+      # Github expects us to be root, not ue4
+      # ue4 wont be able to write anything anywhere
+      # NB: Cooking refuse to work as root
+      options: "-u root"
+
     steps:
       - name: Update Git
         run: |
@@ -30,10 +35,10 @@ jobs:
           export COOKED="$(pwd)/Cooked"
           export LOGS="$(pwd)/Saved/UAT"
 
-          mkdir -p $LOGS
-          mkdir -p $COOKED
+          chown -R ue4 $(pwd)
 
-          uebp_LogFolder=$LOGS /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh \
+          export uebp_LogFolder=$LOGS
+          runuser -u ue4 -- /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh \
             BuildCookRun                                           \
             -unattended                                            \
             -utf8output                                            \
