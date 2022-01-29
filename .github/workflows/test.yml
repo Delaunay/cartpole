@@ -1,28 +1,42 @@
 name: tests
 
 on: [push]
-
-# see
-# https://docs.unrealengine.com/4.27/en-US/SharingAndReleasing/Containers/ContainersQuickStart/
 jobs:
   cooking:
-    runs-on: ghcr.io/epicgames/unreal-engine:dev-4.27
+    runs-on: ubuntu-latest
+    container:
+      # Slim version is 20 Go
+      image: ghcr.io/epicgames/unreal-engine:dev-slim-4.27
+      credentials:
+        username: ${{ github.actor }}
+        # Setting > Developper Setting > Personnal Access Token
+        password: ${{ secrets.CONTAINER_REGISTRY_PAT }}
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Cook
         run: |
-          /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh \
+          # Paths need to be absolute
+          # or they are considered relative to the Engine
+          export PROJECT="$(pwd)/Cartpole.uproject"
+          export COOKED="$(pwd)/Cooked"
+          export LOGS="$(pwd)/Saved/UAT"
+
+          mkdir -p $LOGS
+          mkdir -p $COOKED
+
+          uebp_LogFolder=$LOGS /home/ue4/UnrealEngine/Engine/Build/BatchFiles/RunUAT.sh \
             BuildCookRun                                           \
+            -unattended                                            \
             -utf8output                                            \
             -platform=Linux                                        \
             -clientconfig=Shipping                                 \
             -serverconfig=Shipping                                 \
-            -project=cartpole.uproject                             \
+            -project=$PROJECT                    \
             -noP4 -nodebuginfo -allmaps                            \
             -cook -build -stage -prereqs -pak -archive             \
-            -archivedirectory=Cooked/
+            -archivedirectory=$COOKED
 
       - name: Upload
         uses: actions/upload-artifact@v2
