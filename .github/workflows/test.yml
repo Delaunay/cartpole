@@ -13,6 +13,13 @@ jobs:
         password: ${{ secrets.CONTAINER_REGISTRY_PAT }}
 
     steps:
+      - name: Update Git
+        run: |
+          sudo add-apt-repository ppa:git-core/ppa -y
+          sudo apt-get update
+          sudo apt-get install git -y
+          git --version
+
       - uses: actions/checkout@v2
 
       - name: Cook
